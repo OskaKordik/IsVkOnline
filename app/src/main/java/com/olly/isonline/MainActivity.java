@@ -3,6 +3,7 @@ package com.olly.isonline;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,9 @@ public class MainActivity extends Activity {
 
     MyTask mt;
 
+    String accessToken = "db56fcfadb56fcfadb56fcfabedb3d18b2ddb56db56fcfa866f67e407a29786d8f2efa0";
+    private static final String START_URL = "https://api.vk.com/method/users.get?user_ids=";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +44,7 @@ public class MainActivity extends Activity {
 
     public void isOnline(View view) throws IOException {
         ID_NUMBER = inputIDnumber.getText().toString();
-        mt = new MyTask();
+        mt = new MainActivity.MyTask();
         mt.execute();
     }
 
@@ -82,7 +86,9 @@ public class MainActivity extends Activity {
 
     private void connect(String id) throws IOException {
 
-        URL url = new URL("https://api.vk.com/method/users.get?user_ids=" + id + "&fields=online&name_case=Nom&version=5.40");
+        URL url = new URL(START_URL + id + "&fields=online&name_case=Nom&access_token=" + accessToken + "&v=5.101");
+
+        Log.i("MainActivity", "Connect URL: " + url);
 
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -96,7 +102,6 @@ public class MainActivity extends Activity {
                 buffer.append(inputLine);
             in.close();
             resultJson = buffer.toString();
-
         }
     }
 }
