@@ -1,6 +1,6 @@
 # IsVkOnline version 1.1
 
-Приложение для Android (3.0 - 5.1)
+Приложение для Android (from API 19)
 
 
 Определяет статус (online/offline) по ID аккаунта в VK.
